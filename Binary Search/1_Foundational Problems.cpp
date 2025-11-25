@@ -102,6 +102,9 @@ int main()
     solve(nums);
     return 0;
 }
+// Always try to convert any binary search problem into this foundational problem using the check(mid) function.
+// The check(mid) function needs to constructed in such a manner that it returns 0 for onse set of values and 
+   // for the next set of values, it needs to return 1. Then, finding the occurence of the first one is the solution.
 
 
 // Discussion of Applications : (Only the check(mid) function needs to be changed!)
@@ -124,7 +127,26 @@ int main()
 // 4. Index of the peak element in a bitonic array - (Bitonic array - value increases strictly till one point and then it starts strictly decreasing)
 // S. Inside the check(mid) function --> if ((mid < nums.size()-1) && (nums[mid] > nums[mid+1]), return 1
                                 //   --> if (mid == nums.size()-1) return 1 
-                                //   --> return 0                       
+                                //   --> return 0.
+                                
+// 6. Search Insert Position
+// Samples :
+   // Input: nums = [1, 3, 5, 6], target = 5. Output: 2. Explanation: The target value 5 is found at index 2 in the sorted array. Hence, the function returns 2.
+   // Input: nums = [1, 3, 5, 6], target = 2. Output: 1. Explanation: The target value 2 is not found in the array. However, it should be inserted at index 1 to maintain the sorted order of the array.
+// S. Inside the check(mid) function :
+      // --> if (nums[mid] >= x), return 1
+      // --> if it returns 1, then inside the while loop, check if (nums[mid] == x), if yes, sol = mid; break;
+      // -->                                                                         if no, sol = mid; high = mid - 1
+      
+// 7. Floor and ceil of the target in the sorted array.
+// S. Inside the check(mid) function : if(nums[mid] >= target), return 1
+      // --> sol will store the ceil value at the exit of the while loop.
+      // --> If ceil == target, then floor is also the same value as ceil, else floor is the value of the element previous to that of the floor.
+      
+// 8. Last occurence of the given target in the sorted array. (Consider a small change we are finding the index of the last 0, instead of the first one)
+// S. Inside the check(mid) function : if(nums[mid] == x), return 0.
+      // Inside the loop, If check(mid) == 0, sol = mid; low = mid + 1
+      // Else, check if(nums[mid] > target), YES - high = mid - 1. NO - low = mid + 1.
                                 
 // Some unique problems that does not follow monotonicity and technically not a BS problem but needs a binary search like logic :
 // ------------------------------------------------------------------------------------------------------------------------------
@@ -148,4 +170,3 @@ int main()
                                 
                                 
                                 
-
