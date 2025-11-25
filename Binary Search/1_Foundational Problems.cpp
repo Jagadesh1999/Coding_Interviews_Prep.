@@ -124,14 +124,7 @@ int main()
 // 4. Index of the peak element in a bitonic array - (Bitonic array - value increases strictly till one point and then it starts strictly decreasing)
 // S. Inside the check(mid) function --> if ((mid < nums.size()-1) && (nums[mid] > nums[mid+1]), return 1
                                 //   --> if (mid == nums.size()-1) return 1 
-                                //   --> return 0.
-                                
-                                
-// Common ideas for check(mid) function :
-// --------------------------------------
-// 1. Element to be compared with the external element. Ex : Lower-Bound
-// 2. Element to be compared with the first/last element. Ex : Minimum in ROtated Sorted Array
-// 3. Element to be compared with the prev/next element. Ex : Peak in Bitonic array                                
+                                //   --> return 0                       
                                 
 // Some unique problems that does not follow monotonicity and technically not a BS problem but needs a binary search like logic :
 // ------------------------------------------------------------------------------------------------------------------------------
