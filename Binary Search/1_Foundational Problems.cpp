@@ -1,3 +1,56 @@
+// Binary Search : 
+// -- Efficient searching algorithm used in a sorted data that works in O(log n) time complexity.
+// -- Even in unsorted data structure, if there is a monotonic function, we can use the binary search algorithm.
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool solve() {
+   int size; 
+   cin >> size;
+   
+   vector<int> nums(size);
+   for(int i = 0; i < size; i++) {
+       cin >> nums[i];
+   }
+   
+//   int nums[size];
+//   for(int i = 0; i < size; i++) {
+//       cin >> nums[i];
+//   }
+   
+   
+   int target;
+   cin >> target;
+   
+   int low = 0; 
+   int high = nums.size() - 1; // int high = size - 1;
+   
+   while(low <= high) {
+       int mid = low + (high - low) / 2;
+       
+       if(nums[mid] == target) {
+           return true;
+       } else if(nums[mid] < target) {
+           low = mid + 1;
+       } else {
+           high = mid - 1;
+       }
+   }
+   
+   return false;
+}
+
+int main()
+{
+    bool isTargetPresent = solve();
+    if(isTargetPresent) cout << "The target is found in the array";
+    else cout << "The target is not present";
+    
+    return 0;
+}
+
 // Binary Search - Foundational Problem
 // Index of the first 1 in a binary sorted array containing 0s and 1s.
 
