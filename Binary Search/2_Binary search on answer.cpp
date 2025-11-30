@@ -35,6 +35,7 @@
 
 // Products each machine makes in 'mid' seconds is mid / time[i]
 
+// Can we make t products in mid seconds?
 bool check(const vector<int>& nums, int mid, int total_products) {
     int numberOfProductsMade = 0;
     for(int i = 0; i < nums.size(); i++) {
@@ -44,23 +45,28 @@ bool check(const vector<int>& nums, int mid, int total_products) {
     return 0;
 }
 
+// 2. Painter Partition Problem.
+// Can <=k painters finish the boards in mid seconds?
 bool check(const vector<int>& nums, int mid, int painters) {
-    int paintersUsed = 1;
-    long long currentLoad = 0;
+    int paintersUsed = 0;
+    int last_painter_time_left = 0;
     
     for(int i = 0; i < nums.size(); i++) {
-        if(nums[i] > mid) return 0;  // one board exceeds allowed time
-        
-        if(currentLoad + nums[i] <= mid) {
-            currentLoad += nums[i];
+        if(last_painter_time_left >= nums[mid]) {
+            last_painter_time_left -= nums[i];
         } else {
-            paintersUsed++;
-            currentLoad = nums[i];
+            paintersUsed ++;
+            last_painter_time_left = mid;
             
-            if(paintersUsed > painters) return 0;
+            if(last_painter_time_left >= nums[mid]) {
+                last_painter_time_left -= nums[i];
+            } else {
+                return 0;
+            }
         }
     }
-    return 1;
+    if(paintersUsed <= painters) return 1;
+    return 0;
 }
 
  
