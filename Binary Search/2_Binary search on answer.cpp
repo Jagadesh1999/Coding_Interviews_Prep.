@@ -31,5 +31,17 @@
 // low = 0; 
 // high = any k value * t (because that machine will be able produce t products)
 //        but preferred is min k value because this makes the search space smaller.
+//        If you want to play safe without any confusion, do arr[i] * t
 
+// Products each machine makes in 'mid' seconds is mid / time[i]
+
+bool check(const vector<int>& nums, int mid, int total_products) {
+    int numberOfProductsMade = 0;
+    for(int i = 0; i < nums.size(); i++) {
+        numberOfProductsMade += mid / nums[i];
+        if(numberOfProductsMade >= total_products) return 1;
+    }
+    return 0;
+}
+ 
 
