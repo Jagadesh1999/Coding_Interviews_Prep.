@@ -43,7 +43,7 @@ bool check(const vector<int>& nums, int mid, int total_products) {
         if(numberOfProductsMade >= total_products) return 1;
     }
     return 0;
-}
+} // TC : O(n * log(ans_range))
 
 // 2. Painter Partition Problem.
 // Can <=k painters finish the boards in mid seconds?
@@ -67,7 +67,7 @@ bool check(const vector<int>& nums, int mid, int painters) {
     }
     if(paintersUsed <= painters) return 1;
     return 0;
-}
+} // TC : O(n * log(ans_range))
 
  
 
