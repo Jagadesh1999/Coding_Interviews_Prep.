@@ -43,5 +43,25 @@ bool check(const vector<int>& nums, int mid, int total_products) {
     }
     return 0;
 }
+
+bool check(const vector<int>& nums, int mid, int painters) {
+    int paintersUsed = 1;
+    long long currentLoad = 0;
+    
+    for(int i = 0; i < nums.size(); i++) {
+        if(nums[i] > mid) return 0;  // one board exceeds allowed time
+        
+        if(currentLoad + nums[i] <= mid) {
+            currentLoad += nums[i];
+        } else {
+            paintersUsed++;
+            currentLoad = nums[i];
+            
+            if(paintersUsed > painters) return 0;
+        }
+    }
+    return 1;
+}
+
  
 
