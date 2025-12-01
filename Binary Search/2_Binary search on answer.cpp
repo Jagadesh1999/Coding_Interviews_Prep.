@@ -70,20 +70,19 @@ bool check(const vector<int>& nums, int mid, int k) {
 } // TC : O(n * log(ans_range))
 
 // 3. Largest Array Split Sum.
-// Can we split the array into <= k subarrays such that each subarray
-// has sum <= mid?
+// Can we split the array into <= k subarrays such that each subarray has sum <= mid?
 bool check(const vector<int>& nums, int mid, int k) {
     int splitsMade = 0;
     int last_split_space_left = 0;
     
     for(int i = 0; i < nums.size(); i++) {
-        if(last_split_space_left >= nums[mid]) {
+        if(last_split_space_left >= nums[i]) {
             last_split_space_left -= nums[i];
         } else {
             splitsMade ++;
             last_split_space_left = mid;
             
-            if(last_split_space_left >= nums[mid]) {
+            if(last_split_space_left >= nums[i]) {
                 last_split_space_left -= nums[i];
             } else {
                 return 0;
@@ -101,13 +100,13 @@ bool check(const vector<int>& nums, int mid, int k) {
     int last_student_time_left = 0;
     
     for(int i = 0; i < nums.size(); i++) {
-        if(last_student_time_left >= nums[mid]) {
+        if(last_student_time_left >= nums[i]) {
             last_student_time_left -= nums[i];
         } else {
             studentsUsed ++;
             last_student_time_left = mid;
             
-            if(last_student_time_left >= nums[mid]) {
+            if(last_student_time_left >= nums[i]) {
                 last_student_time_left -= nums[i];
             } else {
                 return 0;
