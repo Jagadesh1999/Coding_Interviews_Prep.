@@ -46,7 +46,7 @@ bool check(const vector<int>& nums, int mid, int total_products) {
     return 0;
 } // TC : O(n * log(ans_range))
 
-// Sweep Based Problems :
+// Sweep-Technique Based Problems :
 // 1. Painter Partition Problem.
 // Can <= k painters finish the boards in mid seconds?
 bool check(const vector<int>& nums, int mid, int k) {
