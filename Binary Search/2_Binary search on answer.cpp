@@ -31,7 +31,25 @@ bool check(const vector<int>& nums, int mid, int total_products) {
         if(numberOfProductsMade >= total_products) return 1;
     }
     return 0;
-} // TC : O(n * log(ans_range))
+} 
+
+int solve(const vector<int>& nums, int total_products) {
+    int low = 1;
+    int high = nums[i] * total_products;
+    int sol = -1;
+
+    while(low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if(check(nums, mid, k)) {
+            sol = mid;
+            high = mid - 1;
+        }else {
+            low = mid + 1;
+        }
+    }
+    return sol;   
+}// TC : O(n * log(ans_range))
 
 // 2. Koko eating Bananas.
 bool check(vector<int>& piles, int mid, int h) {
@@ -41,7 +59,25 @@ bool check(vector<int>& piles, int mid, int h) {
         if(total_hours > h) return 0;
     }
     return 1;
-} // TC : O(n * log(ans_range))
+} 
+
+int solve(const vector<int>& nums, int total_products) {
+    int low = 1;
+    int high = *max_element(nums.begin(), nums.end());
+    int sol = -1;
+
+    while(low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if(check(nums, mid, k)) {
+            sol = mid;
+            high = mid - 1;
+        }else {
+            low = mid + 1;
+        }
+    }
+    return sol;   
+}// TC : O(n * log(ans_range))
 
 // Sweep-Technique Based Problems :
 // 1. Painter Partition Problem.
