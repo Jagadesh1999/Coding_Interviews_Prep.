@@ -70,7 +70,8 @@ bool check(const vector<int>& nums, int mid, int k) {
 } // TC : O(n * log(ans_range))
 
 // 3. Largest Array Split Sum.
-// Chatgpt..Please reframe the question using CAN?
+// Can we split the array into <= k subarrays such that each subarray
+// has sum <= mid?
 bool check(const vector<int>& nums, int mid, int k) {
     int splitsMade = 0;
     int last_split_space_left = 0;
