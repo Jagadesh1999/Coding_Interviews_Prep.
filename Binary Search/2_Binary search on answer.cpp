@@ -46,6 +46,16 @@ bool check(const vector<int>& nums, int mid, int total_products) {
     return 0;
 } // TC : O(n * log(ans_range))
 
+// 2. Koko eating Bananas.
+bool check(vector<int>& piles, int mid, int h) {
+    int total_hours = 0;
+    for(int i = 0; i < piles.size(); i++) {
+        total_hours += (piles[i] + mid - 1)/ mid;
+        if(total_hours > h) return 0;
+    }
+    return 1;
+} // TC : O(n * log(ans_range))
+
 // Sweep-Technique Based Problems :
 // 1. Painter Partition Problem.
 // Can <= k painters finish the boards in mid seconds?
@@ -118,6 +128,45 @@ bool check(const vector<int>& nums, int mid, int k) {
     if(studentsUsed <= k) return 1;
     return 0;
 } // TC : O(n * log(ans_range))
+
+// 4. Capacity to ship packages.
+class Solution {
+public:
+    bool check(vector<int>& weights, int mid, int days) {
+        int daysUsed = 0;
+        int currentLoad = 0;
+
+        for(int i = 0; i < weights.size(); i++) {
+            if(currentLoad + weights[i] <= mid) {
+                currentLoad += weights[i];
+            } else {
+                daysUsed++;
+                currentLoad = weights[i];
+            }
+        }
+        daysUsed++;
+
+        if(daysUsed <= days) return true;
+        return false;
+    }
+
+    int shipWithinDays(vector<int>& weights, int days) {
+        int low = *max_element(weights.begin(), weights.end());
+        int high = accumulate(weights.begin(), weights.end(), 0);
+        int sol = -1;
+
+        while(low <= high) {
+            int mid = low + (high- low) / 2;
+            if(check(weights, mid, days)) {
+                sol = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return sol;    
+    }
+};
 
 
  
