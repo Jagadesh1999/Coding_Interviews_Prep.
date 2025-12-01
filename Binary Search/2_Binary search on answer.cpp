@@ -7,19 +7,6 @@
 // For each machine, you know the number of seconds it needs to make a single product. The machines can work simultaneously, and you can freely decide their schedule.
 // What is the shortest time needed to make t products?
 
-// Input : The first input line has two integers n and t: the number of machines and products.
-//         The next line has n integers k_1,k_2,\dots,k_n: the time needed to make a product using each machine.
-
-// Output : Print one integer: the minimum time needed to make t products.
-
-// Input:
-// 3 7
-// 3 2 5
-
-// Output:
-// 8
-// Explanation: By the end of 8 seconds, machine 1 makes two products, machine 2 makes four products and machine 3 makes one product.
-
 // Tip : We do get the essence of "How much is enough?" in the question. Thats a good indication that is a BS Problem.
 
 // Observations :
@@ -64,13 +51,13 @@ bool check(const vector<int>& nums, int mid, int k) {
     int last_painter_time_left = 0;
     
     for(int i = 0; i < nums.size(); i++) {
-        if(last_painter_time_left >= nums[mid]) {
+        if(last_painter_time_left >= nums[i]) {
             last_painter_time_left -= nums[i];
         } else {
             paintersUsed ++;
             last_painter_time_left = mid;
             
-            if(last_painter_time_left >= nums[mid]) {
+            if(last_painter_time_left >= nums[i]) {
                 last_painter_time_left -= nums[i];
             } else {
                 return 0;
@@ -79,6 +66,24 @@ bool check(const vector<int>& nums, int mid, int k) {
     }
     if(paintersUsed <= k) return 1;
     return 0;
+} 
+
+int solve(const vector<int>& nums, int k) {
+    int low = 0;
+    int high = *max_element(nums.begin(), nums.end());
+    int sol = -1;
+
+    while(low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if(check(nums, mid, k)) {
+            sol = mid;
+            high = mid - 1;
+        }else {
+            low = mid + 1;
+        }
+    }
+    return sol;   
 } // TC : O(n * log(ans_range))
 
 // 2. Largest Array Split Sum.
@@ -103,6 +108,24 @@ bool check(const vector<int>& nums, int mid, int k) {
     }
     if(splitsMade <= k) return 1;
     return 0;
+} 
+
+int solve(const vector<int>& nums, int k) {
+    int low = 0;
+    int high = *max_element(nums.begin(), nums.end());
+    int sol = -1;
+
+    while(low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if(check(nums, mid, k)) {
+            sol = mid;
+            high = mid - 1;
+        }else {
+            low = mid + 1;
+        }
+    }
+    return sol;   
 } // TC : O(n * log(ans_range))
 
 // 3. Book Allocation Problem
@@ -127,6 +150,24 @@ bool check(const vector<int>& nums, int mid, int k) {
     }
     if(studentsUsed <= k) return 1;
     return 0;
+} 
+
+int solve(const vector<int>& nums, int k) {
+    int low = 0;
+    int high = *max_element(nums.begin(), nums.end());
+    int sol = -1;
+
+    while(low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if(check(nums, mid, k)) {
+            sol = mid;
+            high = mid - 1;
+        }else {
+            low = mid + 1;
+        }
+    }
+    return sol;   
 } // TC : O(n * log(ans_range))
 
 // 4. Capacity to ship packages.
@@ -134,23 +175,27 @@ class Solution {
 public:
     bool check(vector<int>& weights, int mid, int days) {
         int daysUsed = 0;
-        int currentLoad = 0;
+        int current_capacity_left = 0;
 
         for(int i = 0; i < weights.size(); i++) {
-            if(currentLoad + weights[i] <= mid) {
-                currentLoad += weights[i];
+            if(current_capacity_left >= weights[i]) {
+                current_capacity_left -= weights[i];
             } else {
-                daysUsed++;
-                currentLoad = weights[i];
+                daysUsed ++;
+                current_capacity_left = mid;
+                
+                if(current_capacity_left >= weights[i]) {
+                    current_capacity_left -= weights[i];
+                } else {
+                    return 0;
+                }
             }
         }
-        daysUsed++;
-
-        if(daysUsed <= days) return true;
-        return false;
+        if(daysUsed <= days) return 1;
+        return 0;
     }
 
-    int shipWithinDays(vector<int>& weights, int days) {
+    int solve(vector<int>& weights, int days) {
         int low = *max_element(weights.begin(), weights.end());
         int high = accumulate(weights.begin(), weights.end(), 0);
         int sol = -1;
@@ -166,8 +211,4 @@ public:
         }
         return sol;    
     }
-};
-
-
- 
-
+}; // TC : O(n * log(ans))
