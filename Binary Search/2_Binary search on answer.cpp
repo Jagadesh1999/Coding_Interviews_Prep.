@@ -1,6 +1,7 @@
 // Binary Search on answer :
 // This means the search space is the answer itself.
 
+// Atomic Item Contribution :
 // 1. CSES - Factory Machines Problem.
 // A factory has n machines which can be used to make products. Your goal is to make a total of t products.
 // For each machine, you know the number of seconds it needs to make a single product. The machines can work simultaneously, and you can freely decide their schedule.
@@ -45,7 +46,8 @@ bool check(const vector<int>& nums, int mid, int total_products) {
     return 0;
 } // TC : O(n * log(ans_range))
 
-// 2. Painter Partition Problem.
+// Sweep Based Problems :
+// 1. Painter Partition Problem.
 // Can <= k painters finish the boards in mid seconds?
 bool check(const vector<int>& nums, int mid, int k) {
     int paintersUsed = 0;
@@ -69,7 +71,7 @@ bool check(const vector<int>& nums, int mid, int k) {
     return 0;
 } // TC : O(n * log(ans_range))
 
-// 3. Largest Array Split Sum.
+// 2. Largest Array Split Sum.
 // Can we split the array into <= k subarrays such that each subarray has sum <= mid?
 bool check(const vector<int>& nums, int mid, int k) {
     int splitsMade = 0;
@@ -93,7 +95,7 @@ bool check(const vector<int>& nums, int mid, int k) {
     return 0;
 } // TC : O(n * log(ans_range))
 
-// 4. Book Allocation Problem
+// 3. Book Allocation Problem
 // Can we allocate the books for <= k students in mid seconds?
 bool check(const vector<int>& nums, int mid, int k) {
     int studentsUsed = 0;
