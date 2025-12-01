@@ -46,8 +46,8 @@ bool check(const vector<int>& nums, int mid, int total_products) {
 } // TC : O(n * log(ans_range))
 
 // 2. Painter Partition Problem.
-// Can <=k painters finish the boards in mid seconds?
-bool check(const vector<int>& nums, int mid, int painters) {
+// Can <= k painters finish the boards in mid seconds?
+bool check(const vector<int>& nums, int mid, int k) {
     int paintersUsed = 0;
     int last_painter_time_left = 0;
     
@@ -65,9 +65,58 @@ bool check(const vector<int>& nums, int mid, int painters) {
             }
         }
     }
-    if(paintersUsed <= painters) return 1;
+    if(paintersUsed <= k) return 1;
     return 0;
 } // TC : O(n * log(ans_range))
+
+// 3. Largest Array Split Sum.
+// Chatgpt..Please reframe the question using CAN?
+bool check(const vector<int>& nums, int mid, int k) {
+    int splitsMade = 0;
+    int last_split_space_left = 0;
+    
+    for(int i = 0; i < nums.size(); i++) {
+        if(last_split_space_left >= nums[mid]) {
+            last_split_space_left -= nums[i];
+        } else {
+            splitsMade ++;
+            last_split_space_left = mid;
+            
+            if(last_split_space_left >= nums[mid]) {
+                last_split_space_left -= nums[i];
+            } else {
+                return 0;
+            }
+        }
+    }
+    if(splitsMade <= k) return 1;
+    return 0;
+} // TC : O(n * log(ans_range))
+
+// 4. Book Allocation Problem
+// Can we allocate the books for <= k students in mid seconds?
+bool check(const vector<int>& nums, int mid, int k) {
+    int studentsUsed = 0;
+    int last_student_time_left = 0;
+    
+    for(int i = 0; i < nums.size(); i++) {
+        if(last_student_time_left >= nums[mid]) {
+            last_student_time_left -= nums[i];
+        } else {
+            studentsUsed ++;
+            last_student_time_left = mid;
+            
+            if(last_student_time_left >= nums[mid]) {
+                last_student_time_left -= nums[i];
+            } else {
+                return 0;
+            }
+        }
+    }
+    if(studentsUsed <= k) return 1;
+    return 0;
+} // TC : O(n * log(ans_range))
+
 
  
 
