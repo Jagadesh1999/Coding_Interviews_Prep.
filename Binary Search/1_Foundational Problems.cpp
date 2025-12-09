@@ -163,6 +163,7 @@ int main()
       // Still, the minimum element stays the same.
       // No further code change is needed. 
       // The only formula needed is, Rotations = nums.size() - nums[sol].
+// Note : Try to understand the solution approach for the duplicates version before the interviews.
 
 // 10. Every element occurs twice except the single element. Find that single Element in a Sorted Array.
 // Tips : For any nums[mid] at even index, nums[mid] == nums[mid + 1]. So, for any mid calculated, if its odd, do mid--;
