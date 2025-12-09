@@ -245,7 +245,7 @@ bool check(const vector<int>& nums, int mid, int k) {
 
 int solve(const vector<int>& nums, int k) {
     int low = *max_element(nums.begin(), nums.end());
-    int high = int high = accumulate(nums.begin(), nums.end(), 0);
+    int high = accumulate(nums.begin(), nums.end(), 0);
     int sol = -1;
 
     while(low <= high) {
