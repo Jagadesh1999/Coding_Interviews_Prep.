@@ -314,3 +314,52 @@ public:
         return sol;    
     }
 }; // TC : O(n * log(ans))
+
+// 5. Aggressive Cows Problem.
+// Problem Statement: 
+// You are given an array 'arr' of size 'n' which denotes the position of stalls. You are also given an integer 'k' which denotes the number of aggressive cows.
+// You are given the task of assigning stalls to 'k' cows such that the minimum distance between any two of them is the maximum possible. Find the maximum possible minimum distance.
+
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+bool check(const std::vector<int>& stalls, int mid, int k) {
+    int cowsPlaced = 0; 
+    long long lastCowPosition = -2000000000LL; // Use long long for a safely small number
+    
+    for (int i = 0; i < stalls.size(); i++) {
+        
+        if (stalls[i] - lastCowPosition >= mid) {
+            
+            cowsPlaced++;
+            lastCowPosition = stalls[i];
+            
+            if (cowsPlaced >= k) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int solve(std::vector<int>& stalls, int k) {
+    std::sort(stalls.begin(), stalls.end());
+
+    int n = stalls.size();
+    int low = 1; 
+    int high = stalls[n - 1] - stalls[0]; 
+    int sol = -1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if (check(stalls, mid, k)) {
+            sol = mid;
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return sol;
+}
