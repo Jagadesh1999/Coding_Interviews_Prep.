@@ -8,7 +8,7 @@
 bool check(int mid, int x) {
     if((long) mid * mid <= x) return 1; // sol = mid; low = mid + 1
     else return 0; // high = mid - 1.
-}
+} // TC : O(log n)
 
 // Atomic Item Contribution :
 // 1. CSES - Factory Machines Problem.
