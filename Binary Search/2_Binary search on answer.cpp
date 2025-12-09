@@ -1,6 +1,15 @@
 // Binary Search on answer :
 // This means the search space is the answer itself.
 
+// 1. Square root of a number.
+// Note : This problem needs to be transformed in such a way that it needs to be 1 1 1 . . . 1 0 0 . . . 0 0 
+// Finding the index of the last occurence of 1 is the answer
+
+bool check(int mid, int x) {
+    if((long) mid * mid <= x) return 1; // sol = mid; low = mid + 1
+    else return 0; // high = mid - 1.
+}
+
 // Atomic Item Contribution :
 // 1. CSES - Factory Machines Problem.
 // A factory has n machines which can be used to make products. Your goal is to make a total of t products.
