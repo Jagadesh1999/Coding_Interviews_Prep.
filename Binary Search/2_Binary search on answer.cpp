@@ -10,6 +10,30 @@ bool check(int mid, int x) {
     else return 0; // high = mid - 1.
 } // TC : O(log n)
 
+// 2. Nth root of a number using binary search.
+bool check(int mid, int x, int n) {
+    if (mid == 0) return 1; // Special case for mid=0, as 0^n = 0 <= x (for non-negative x)
+
+    long product = 1;
+    for (int i = 0; i < n; i++) {
+        // Pre Multiplication Check : To prevent LONG overflow.
+        if (product > x / mid && i < n - 1) { 
+             return 0; // Will definitely exceed x
+        }
+        
+        // Actual Multiplication : 
+        product *= mid;
+        
+        // Post Multiplication Check : Break early if product already exceeds x
+        if (product > x && i < n - 1) {
+            return 0;
+        }
+    }
+    
+    if (product <= x) return 1;
+    else return 0;
+}
+
 // Atomic Item Contribution :
 // 1. CSES - Factory Machines Problem.
 // A factory has n machines which can be used to make products. Your goal is to make a total of t products.
