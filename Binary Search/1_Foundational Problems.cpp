@@ -170,6 +170,12 @@ int main()
 //       Before the single element, pairs are (Even Index, Odd Index).
 //       After the single element, pairs are (Odd Index, Even Index).
 
+bool check(const vector<int>& nums, int mid) {
+   if(mid != nums.size()-1 && nums[mid] != nums[mid+1]) return 1;
+   if(mid == nums.size()-1) return 1;
+   return 0;
+}
+
 // We search for the first index 'mid' where the pattern is broken.
 int findSingleElement(const vector<int>& nums) {
     int low = 0;
@@ -180,53 +186,21 @@ int findSingleElement(const vector<int>& nums) {
     
     while(low <= high) {
         int mid = low + (high - low) / 2;
-        
-        // 1. Ensure 'mid' is at an even index for consistent pattern checking.
-        //    If 'mid' is odd, move it back to the preceding even index.
-        //    Example: if mid=3, mid & 1 is true. mid-- makes it mid=2.
-        //    This simplifies the logic to always check (mid, mid+1) where 'mid' is even.
+       
         if (mid % 2 != 0) { 
             mid--;
         }
-        
-        // 2. Check the pattern: If nums[mid] == nums[mid+1], it means 'mid' is part of a pair
-        //    that is BEFORE the single element (correct pattern: Even, Odd).
-        //    The single element must be in the right half.
-        if (mid != nums.size()-1 && nums[mid] == nums[mid + 1]) {
-            low = mid + 2; // Move low past this pair (mid and mid+1)
-        } 
-        // 3. Else, the single element must be either nums[mid] itself or in the left half.
-        //    The pattern is broken: nums[mid] != nums[mid+1].
-        //    Store potential answer and search the left half.
-        else {
-            // nums[mid] could be the single element (or the start of the reversed pattern)
+       
+        if (check(nums, mid)) {
             sol = mid;
             high = mid - 1; 
+        } 
+        else {
+           low = mid + 2; // Move low past this pair (mid and mid+1)   
         }
     }
-    
-    // The loop terminates when low > high, and 'low' points to the first element
-    // of a pair that is *not* equal to its neighbour, meaning it's the single element.
-    return sol;
+    return nums[sol];
 }
-
-/*
-int main() {
-    // Input: [1, 1, 2, 3, 3, 4, 4, 8, 8] -> Output: 2
-    vector<int> nums1 = {1, 1, 2, 3, 3, 4, 4, 8, 8};
-    cout << "The single element is: " << findSingleElement(nums1) << endl; 
-    
-    // Input: [3, 3, 7, 7, 10, 11, 11] -> Output: 10
-    vector<int> nums2 = {3, 3, 7, 7, 10, 11, 11};
-    cout << "The single element is: " << findSingleElement(nums2) << endl; 
-
-    // Input: [1, 2, 2] -> Output: 1
-    vector<int> nums3 = {1, 2, 2};
-    cout << "The single element is: " << findSingleElement(nums3) << endl; 
-    
-    return 0;
-}
-*/
       
 // 11. Index of the peak element in a bitonic array - (Bitonic array - value increases strictly till one point and then it starts strictly decreasing)
 // S. Inside the check(mid) function --> if ((mid < nums.size()-1) && (nums[mid] > nums[mid+1]), return 1
