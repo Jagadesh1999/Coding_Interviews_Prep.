@@ -35,7 +35,7 @@ bool check(int mid, int x, int n) {
 }
 
 // Atomic Item Contribution :
-// 1. CSES - Factory Machines Problem.
+// CSES - Factory Machines Problem.
 // A factory has n machines which can be used to make products. Your goal is to make a total of t products.
 // For each machine, you know the number of seconds it needs to make a single product. The machines can work simultaneously, and you can freely decide their schedule.
 // What is the shortest time needed to make t products?
@@ -84,7 +84,7 @@ int solve(const vector<int>& nums, int total_products) {
     return sol;   
 }// TC : O(n * log(ans_range))
 
-// 2. Koko eating Bananas.
+// 3. Koko eating Bananas.
 bool check(vector<int>& piles, int mid, int h) {
     int total_hours = 0;
     for(int i = 0; i < piles.size(); i++) {
