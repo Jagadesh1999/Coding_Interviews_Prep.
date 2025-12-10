@@ -211,19 +211,50 @@ int findSingleElement(const vector<int>& nums) {
 // Some unique problems that does not follow monotonicity and technically not a BS problem but needs a binary search like logic :
 // ------------------------------------------------------------------------------------------------------------------------------
 // 1. Find any one peak element 
-// S. 3 possible condition checks inside check(mid) function. 
-   // Edge case : Left boundary
-   // if (mid == 0) {
-   //     return n > 1 && nums[mid] > nums[mid + 1];
-   // }
-   
-   // Edge case : Right boundary
-   // if (mid == n - 1) {
-   //     return n > 1 && nums[mid] > nums[mid - 1];
-   // }
-   
-   // General case :
-   // return nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1];
+bool check(int mid, const vector<int>& nums) {
+    int n = nums.size();
+    
+    // 1. Handle the last element case (it's always a peak relative to a virtual -inf at n)
+    if (mid == n - 1) {
+        return true;
+    }
+    
+    // 2. Check for a descending slope or the peak itself
+    // If nums[mid] > nums[mid+1], the peak must be at or to the left of mid.
+    if (nums[mid] > nums[mid + 1]) {
+        return true;
+    }
+    
+    // 3. Otherwise, we are on an ascending slope, the peak must be to the right.
+    return false;
+}
+
+int findPeakElement(const vector<int>& nums) {
+    int n = nums.size();
+    if (n == 0) return -1;
+    if (n == 1) return 0; // The single element is the peak
+    
+    int low = 0;
+    int high = n - 1;
+    // 'sol' stores the index of the best candidate found so far (the first '1' in the check function)
+    int sol = -1; 
+    
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        
+        if (check(mid, nums)) { 
+            // Check returns true: We are on an descending slope, peak *must* be to the left.
+            // We search in the right half.
+            sol = mid;
+            high = mid - 1;
+        } else {
+            // Check returns false: We are on an ascending slope, peak *must* be to the right.
+            // We search in the right half.
+            low = mid + 1;
+        }
+    }
+    return sol; 
+}
    
    // This is more of a maths or an observation based problem as binary search cannot be used to find any peak.
    // BS is used to find one exact answer.
