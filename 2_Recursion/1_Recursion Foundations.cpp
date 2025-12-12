@@ -58,7 +58,8 @@ fib(1) fib(0)
 
 Recursion stack and flow for fib(3) :
 ======================================
-
+// Know what is a stack frame?
+// Know about how stack frames are created and deleted?
 [Value of fib(3) is 2, sequence is 0, 1, 1, 2]
 
                 (3)
@@ -88,3 +89,14 @@ Fib(1) Fib(0)
 5. fib(2) completes: 1 + 0 = 1 -> Returns 1 to fib(3).
 6. fib(1) completes: Returns 1 to fib(3).
 7. fib(3) completes: 1 + 1 = 2 -> Returns 2.
+
+// Recursion Categories : 
+  // Divide and Conquer
+  // Backtrack
+  // K-th Logic
+  // Print Factors/ Fractals.
+
+Building the Recursive Code : 
+=============================
+1. Check if the string is palindromic using the recursion.
+// In Recursion, we usually break one bigger problem into smaller problems.
