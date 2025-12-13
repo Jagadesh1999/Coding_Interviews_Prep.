@@ -41,19 +41,22 @@ void solve(int[] nums, int k) {
     int sol = 0;
     
     while(tail < nums.size() {
-        while(head+1 < nums.size() && (nums[head+1] == 1 || count < k)) {
+        // Step 1 : Keep eating as much as you can.
+        while(head+1 < nums.size() && (count < k || (count == k && nums[head+1] ) {
             head++;
             if(nums[head] == 0) count++;
         }
-        
+
+        // Step 2 : Update the answer
         sol = max(sol, head - tail + 1);
-        
-        if(tail > head) {
-            tail ++;
-            head = tail - 1;
-        } else {
+
+        // Step 3 : Move tail one step forward.
+        if(tail <= head) {
             if(nums[tail] == 0) count--;
             tail++;
+        } else {
+            tail ++;
+            head = tail - 1;
         }
     }
     return sol;
