@@ -34,7 +34,7 @@
 // Here, max length is the ans. 
 // So, ans = max(ans, Head - Tail + 1)
 
-void solve(int[] nums, int k) {
+int solve(int[] nums, int k) {
     int head = -1; 
     int tail = 0;
     int count = 0; 
@@ -67,7 +67,7 @@ void solve(int[] nums, int k) {
 // what needs to be found - subarrays
 // monotonic criteria <= k
 
-void solve(int[] nums, int k) {
+int solve(int[] nums, int k) {
     int head = -1; 
     int tail = 0;
     unordered_map<int, int> map; 
