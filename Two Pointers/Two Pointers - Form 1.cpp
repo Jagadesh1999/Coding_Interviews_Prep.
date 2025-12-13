@@ -18,12 +18,45 @@
 // Brute Force is O(n ^ 2).
 
 // [0, 1, 0, 1, 0, 0, 1, 1, 0] 
-// Head = -1; Tail = 0;
+// Head = -1; Tail = 0; Because we need the initial length to be zero.
 // Think of a snake, it moves forward (head) and eats as many elements as it can.
 
-// Template (TC : O(n))
+// A. Template (TC : O(n))
 // 1. For each position of tail, as long as it can contain atmost k 0s, keep incrementing the head unless you reach the end.
 // 2. Calculate your answer for the range [Tail, Head].
 // 3. For next iteration, move Tail one step ahead.
 
- 
+// B. Decide the Data structure.
+// This is needed in order to quickly check if we can eat the next element or not.
+// Here, a variable count should be enough for this problem.
+
+// C. Decide the Answer :
+// Here, max length is the ans. 
+// So, ans = max(ans, Head - Tail + 1)
+
+void solve(int[] nums, int k) {
+    int head = -1; 
+    int tail = 0;
+    int count = 0; 
+    int sol = 0;
+    
+    while(tail < nums.size() {
+        while(head+1 < nums.size() && (nums[head+1] == 1 || count < k)) {
+            head++;
+            if(nums[head] == 0) count++;
+        }
+        
+        sol = max(sol, head - tail + 1);
+        
+        if(tail > head) {
+            tail ++;
+            head = tail - 1;
+        } else {
+            if(nums[tail] == 0) count--;
+            tail++;
+        }
+    }
+    return sol;
+}
+
+
