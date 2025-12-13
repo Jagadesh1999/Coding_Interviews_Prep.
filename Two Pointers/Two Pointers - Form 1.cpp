@@ -87,7 +87,14 @@ void solve(int[] nums, int k) {
         }
 
         // Step 2 : Update the answer
-        sol += (head - tail + 1);
+        sol += (head - tail + 1); // Total number of subarrays.
+        
+        // Sum of length of all subarrays :
+        // length = head - tail + 1;
+        // sol += length * (length + 1) / 2;
+
+        // Length of the longest subarray : 
+        // sol = max(sol, head - tail + 1);
 
         // Step 3 : Move tail one step forward.
         if(tail <= head) {
@@ -107,5 +114,11 @@ void solve(int[] nums, int k) {
 }
 
 // TC : O(n), SC : O(distinct elements).
+
+// 3. Total subarrays with exactly k distinct 
+The solve function needs to return atmostKDistinct(nums, k) -  atmostKDistinct(nums, k - 1)
+
+// 4. Total subarrays with atleast k distinct
+The solve function needs to return (nums.size() * (nums.size() + 1) / 2) -  (atmostKDistinct(nums, k - 1))
 
 
