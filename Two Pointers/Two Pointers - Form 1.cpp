@@ -42,7 +42,7 @@ int solve(int[] nums, int k) {
     
     while(tail < nums.size() {
         // Step 1 : Keep eating as much as you can.
-        while(head+1 < nums.size() && (nums[head+1] == 1 || count < k)) {
+        while(head+1 < nums.size() && (count < k || (count == k && nums[head+1] == 1)) {
             head++;
             if(nums[head] == 0) count++;
         }
@@ -72,11 +72,11 @@ int solve(int[] nums, int k) {
     int tail = 0;
     unordered_map<int, int> map; 
     int countDistinct = 0;
-    int sol = 0;
+    int sol = 0; // Be careful with this variable's initialization.
     
     while(tail < nums.size() {
         // Step 1 : Keep eating as much as you can.
-        while(head+1 < nums.size() && (map.count(nums[head + 1]) || countDistinct < k)) {
+        while(head+1 < nums.size() && (countDistinct < k  || (countDistinct == k && map[nums[head+1]] >= 1)) {
             head++; 
             
             // Increment frequency and check if it's a new distinct element
@@ -124,6 +124,111 @@ The solve function needs to return (nums.size() * (nums.size() + 1) / 2) -  (atm
 Note : 
 This subtraction trick works only for count versions.
 For longest/shortest versions, be specific about conditions while updating the solution.
+
+// 5. Longest Substring without repeating characters.
+int solve(string s) {
+    int head = -1, tail = 0;
+    unordered_map<char, int> freq;
+    int sol = 0;
+    
+    while(tail < s.size()) {
+        while(head+1 < s.size() && freq[s[head+1]] == 0) {
+            head++;
+            freq[s[head]]++;
+        }
+        sol = max(sol, head - tail + 1);
+        
+        if(tail <= head) {
+            freq[s[tail]]--;
+            tail++;
+        } else {
+            tail++; 
+            head = tail - 1; 
+            freq.clear(); // Rsestting is most important.
+        }
+    }
+    return sol;
+}
+
+// TC : O(n), SC : O(n)
+
+// 6. Longest/Shortest substring with exactly k distinct
+class Solution {
+  public:
+    int longestKSubstr(string &s, int k) {
+        int head = -1;
+        int tail = 0;
+        unordered_map<char, int> freq;
+        int countDistinct = 0;
+        int sol = -1;
+        
+        while(tail < s.size()) {
+            while(head + 1 < s.size() && ((countDistinct < k) || (countDistinct == k && freq[s[head+1]] >= 1 ))) {
+                head++;
+                freq[s[head]]++;
+                if(freq[s[head]] == 1) countDistinct++;
+            }
+            
+            if(countDistinct == k) sol = max(sol, head - tail + 1);
+            
+            if(tail <= head) {
+                freq[s[tail]]--;
+                if(freq[s[tail]] == 0) countDistinct--;
+                tail++;
+            } else {
+                tail ++;
+                head = tail - 1;
+                countDistinct = 0;
+                freq.clear();
+            }
+        }
+        return sol;
+    }
+};
+
+// Think about the problems :
+// Longest/Shortest substring with atmost k distinct
+// Longest/Shortest substring with atleasr k distinct
+
+// 7. Longest Repeating Character Replacement.
+// Key Insight: In any window, changes_needed = window_length - max_frequency_of_any_char
+
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        int head = -1, tail = 0;
+        unordered_map<char, int> freq;
+        int maxFreq = 0;
+        int sol = 0;
+        
+        while(tail < s.size()) {
+            // FIX: Always expand, check AFTER update
+            while(head+1 < s.size()) {
+                freq[s[head+1]]++;  // TRY adding first
+                int newMaxFreq = maxFreq;
+                newMaxFreq = max(newMaxFreq, freq[s[head+1]]);
+                if((head+1 - tail + 1) - newMaxFreq > k) {
+                    freq[s[head+1]]--;  // Undo if invalid
+                    break;
+                }
+                head++;
+                maxFreq = newMaxFreq;
+            }
+            
+            sol = max(sol, head - tail + 1);
+            
+            if(tail <= head) {
+                freq[s[tail]]--;
+                maxFreq = 0;
+                for(auto& p : freq) if(p.second > 0) maxFreq = max(maxFreq, p.second);
+                tail++;
+            } else {
+                tail++; head = tail-1; freq.clear(); maxFreq = 0;
+            }
+        }
+        return sol;
+    }
+};
 
 
 
