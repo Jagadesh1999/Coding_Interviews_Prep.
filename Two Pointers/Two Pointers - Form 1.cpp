@@ -121,4 +121,9 @@ The solve function needs to return atmostKDistinct(nums, k) -  atmostKDistinct(n
 // 4. Total subarrays with atleast k distinct
 The solve function needs to return (nums.size() * (nums.size() + 1) / 2) -  (atmostKDistinct(nums, k - 1))
 
+Note : 
+This subtraction trick works only for count versions.
+For longest/shortest versions, be specific about conditions while updating the solution.
+
+
 
