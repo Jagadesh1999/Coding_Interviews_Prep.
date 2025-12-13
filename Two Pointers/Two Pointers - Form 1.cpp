@@ -42,7 +42,7 @@ void solve(int[] nums, int k) {
     
     while(tail < nums.size() {
         // Step 1 : Keep eating as much as you can.
-        while(head+1 < nums.size() && (count < k || (count == k && nums[head+1] ) {
+        while(head+1 < nums.size() && (nums[head+1] == 1 || count < k)) {
             head++;
             if(nums[head] == 0) count++;
         }
@@ -61,5 +61,51 @@ void solve(int[] nums, int k) {
     }
     return sol;
 }
+
+// 2. Find the number of subarrays with distinct elements <= k (atmost k distinct)
+// Ask - count
+// what needs to be found - subarrays
+// monotonic criteria <= k
+
+void solve(int[] nums, int k) {
+    int head = -1; 
+    int tail = 0;
+    unordered_map<int, int> map; 
+    int countDistinct = 0;
+    int sol = 0;
+    
+    while(tail < nums.size() {
+        // Step 1 : Keep eating as much as you can.
+        while(head+1 < nums.size() && (map.count(nums[head + 1]) || countDistinct < k)) {
+            head++; 
+            
+            // Increment frequency and check if it's a new distinct element
+            map[nums[head]]++;
+            if (map[nums[head]] == 1) { 
+                countDistinct++;
+            }
+        }
+
+        // Step 2 : Update the answer
+        sol += (head - tail + 1);
+
+        // Step 3 : Move tail one step forward.
+        if(tail <= head) {
+            map[nums[tail]]--;
+            if(map[nums[tail]] == 0) {
+                countDistinct--;
+            }
+            tail++;
+        } else {
+            tail ++;
+            head = tail - 1;
+            map.clear(); 
+            countDistinct = 0;
+        }
+    }
+    return sol;
+}
+
+// TC : O(n), SC : O(distinct elements).
 
 
