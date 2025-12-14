@@ -343,7 +343,9 @@ class Solution {
 // Longest/Shortest substring with atmost k distinct
 // Longest/Shortest substring with atleasr k distinct
 
-// 7. Longest Repeating Character Replacement.
+// 7. Fruits into Baskets. - Length of the longest subarray with atmost k distinct elements.
+
+// 8. Longest Repeating Character Replacement.
 // Key Insight: In any window, changes_needed = window_length - max_frequency_of_any_char
 // Note : Use frequency map and max_freq combination as the data structure.
 
@@ -385,7 +387,7 @@ public:
 
 // TC : O(n), SC : O(26) = O(1)
 
-// 8. Given an array containing N positive integers and an integer K. Your task is to find the length of the longest 
+// 9. Given an array containing N positive integers and an integer K. Your task is to find the length of the longest 
 // Sub-Array with sum of the elements equal to the given value K.
     
 int longestSubarrayWithSumK(vector<int>& nums, int K) {
@@ -418,7 +420,7 @@ int longestSubarrayWithSumK(vector<int>& nums, int K) {
     return sol;
 } // TC : O(n), SC : O(1)
 
-// 9. Minimum Window Substring.
+// 10. Minimum Window Substring.
 // Given two strings s and t, return the minimum window in s which will contain all the characters in t. If there is 
 // no such window in s that covers all characters in t, return the empty string "".
 // Note that If there is such a window, it is guaranteed that there will always be only one unique minimum window in s.
