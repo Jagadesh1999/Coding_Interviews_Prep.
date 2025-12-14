@@ -9,7 +9,6 @@
 // Discussion - Form 1 :
 // ----------------------
 // 1. Maximum Average Subarray Problem.
-// Similar Variation : Maximum Sum Subarray Problem.
 class Solution {
 public:
     double findMaxAverage(vector<int>& nums, int k) {
@@ -36,7 +35,9 @@ public:
     }
 }; // TC : O(n)
 
-// 2. Sliding Window Maximum 
+// 2. Similar Variation : Maximum Sum Subarray Problem.
+
+// 3. Sliding Window Maximum 
 
 // You are given an array of integers nums, there is a sliding window of size k which is moving from the very left 
 // of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves 
@@ -78,7 +79,7 @@ public:
     }
 };
 
-// 3. First Negative Number of each subarray.
+// 4. First Negative Number of each subarray.
 class Solution {
 public:
     vector<int> solve(vector<int>& nums, int k) {
@@ -110,19 +111,18 @@ public:
     }
 };
 
-// 4. Count the occurences of the anagram in the string.
+// 5. Count the occurences of the anagram in the string.
 class Solution {
 public:
     int search(string pat, string txt) {
         int k = pat.size();
-        unordered_map<char, int> freq;
-
-        // Build frequency map of pattern
-        for(char c : pat) freq[c]++;
-
-        int count = freq.size();  // distinct chars to be matched
+        
         int left = 0, right = 0;
         int ans = 0;
+
+        unordered_map<char, int> freq;
+        for(char c : pat) freq[c]++; // Build frequency map of pattern
+        int count = freq.size();  // distinct chars to be matched
 
         while(right < txt.size()) {
             // Step 1: Allow always
@@ -135,9 +135,9 @@ public:
             // Step 2: Can we remove?
             if(right >= k) {
                 if(freq.find(txt[left]) != freq.end()) {
-                    if(freq[txt[left]] == 0)
-                        count++;
                     freq[txt[left]]++;
+                    if(freq[txt[left]] == 1)
+                        count++;   
                 }
                 left++;
             }
@@ -153,6 +153,7 @@ public:
         return ans;
     }
 };
+
 // Discussion - Form 2 :
 // ---------------------
 // 1. Find the longest subarray of all 1s with atmost k flips. 
@@ -371,7 +372,10 @@ public:
                 for(auto& p : freq) if(p.second > 0) maxFreq = max(maxFreq, p.second);
                 tail++;
             } else {
-                tail++; head = tail-1; freq.clear(); maxFreq = 0;
+                tail++; 
+                head = tail-1; 
+                freq.clear(); 
+                maxFreq = 0;
             }
         }
         return sol;
@@ -379,6 +383,39 @@ public:
 };
 
 // TC : O(n), SC : O(26) = O(1)
+
+// 8. Given an array containing N positive integers and an integer K. Your task is to find the length of the longest 
+// Sub-Array with sum of the elements equal to the given value K.
+    
+int longestSubarrayWithSumK(vector<int>& nums, int K) {
+    int head = -1, tail = 0;
+    int currSum = 0;
+    int sol = 0;
+
+    while(tail < n) {
+        // Step 1: Eat as much as you can
+        while(head + 1 < nums.size() && currSum + nums[head + 1] <= K) {
+            head++;
+            currSum += nums[head];
+        }
+
+        // Step 2: Update answer
+        if(currSum == K) {
+            sol = max(sol, head - tail + 1);
+        }
+
+        // Step 3: Move tail
+        if(tail <= head) {
+            currSum -= nums[tail];
+            tail++;
+        } else {
+            tail++;
+            head = tail - 1;
+            currSum = 0;
+        }
+    }
+    return sol;
+} // TC : O(n), SC : O(1)
 
 
 
