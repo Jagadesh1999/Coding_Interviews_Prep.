@@ -1,11 +1,85 @@
 // Two Pointers : 
 // The framework that we will study is so powerful that it covers a vast variety of harder problems.
 
-// Form 0 : Fixed sized window - Sliding Window Patterns
-// Form 1 : 2 pointers moving in same direction (same array)
-// Form 2 : 2 pointers moving in opposite direction (same array)
-// Form 3 : 2 pointers moving in same direction (different array)
+// Form 1 : Fixed sized window - Sliding Window Patterns
+// Form 2 : 2 pointers moving in same direction (same array)
+// Form 3 : 2 pointers moving in opposite direction (same array)
+// Form 4 : 2 pointers moving in same direction (different array)
 
+// Discussion - Form 1 :
+// ----------------------
+// 1. Maximum Average Subarray Problem.
+class Solution {
+public:
+    double findMaxAverage(vector<int>& nums, int k) {
+        int left = 0; int right = 0;
+        int currSum = 0; int maxSum = INT_MIN; 
+
+        while(right < nums.size()) {
+            // Step 1 : Allow always
+            currSum += nums[right];
+            
+            // Step 2 : Can we remove..!?
+            if(right >= k) {
+                currSum -= nums[left];
+                left++;
+            }
+            
+            // Step 3 : Is it k-sized 
+            if(right - left + 1 == k) {
+                maxSum = max(maxSum, currSum);
+            }
+            right++;
+        }
+        return (double) maxSum / k;
+    }
+}; // TC : O(n)
+
+// 2. Sliding Window Maximum 
+
+// You are given an array of integers nums, there is a sliding window of size k which is moving from the very left 
+// of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves 
+// right by one position. Return the max sliding window.
+
+// Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+// Output: [3,3,5,5,6,7]
+
+// Note : We will make use of the data structure Dequeue which has the property of FIFO.
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int left = 0; 
+        int right = 0;
+        
+        deque<int> deque;
+        vector<int> list;
+
+        while(right < nums.size()) {
+            while(!deque.empty() && (nums[deque.back()] < nums[right])) {
+                deque.pop_back();
+            }
+            deque.push_back(right);
+
+            if(right >= k) {
+                if(!deque.empty() && deque.front() == left) {
+                    deque.pop_front();
+                }
+                left++;
+            }
+
+            if(right - left + 1 == k) {
+                list.push_back(nums[deque.front()]);
+            }
+            
+            right++;
+        }
+        return list;
+    }
+};
+
+
+// Discussion - Form 2 :
+// ---------------------
 // 1. Find the longest subarray of all 1s with atmost k flips. 
 
 // Longest - ask (It could be longest, shortest, count, sum of length).
