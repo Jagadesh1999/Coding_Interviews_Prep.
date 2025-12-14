@@ -9,6 +9,7 @@
 // Discussion - Form 1 :
 // ----------------------
 // 1. Maximum Average Subarray Problem.
+// Similar Variation : Maximum Sum Subarray Problem.
 class Solution {
 public:
     double findMaxAverage(vector<int>& nums, int k) {
@@ -78,10 +79,80 @@ public:
 };
 
 // 3. First Negative Number of each subarray.
+class Solution {
+public:
+    vector<int> solve(vector<int>& nums, int k) {
+        int left = 0; 
+        int right = 0;
+        
+        deque<int> deque;
+        vector<int> list;
 
+        while(right < nums.size()) {
+            if(nums[right] < 0) {
+                deque.push_back(right);
+            }
 
+            if(right >= k) {
+                if(!deque.empty() && deque.front() == left) {
+                    deque.pop_front();
+                }
+                left++;
+            }
 
+            if(right - left + 1 == k) {
+                list.push_back(nums[deque.front()]);
+            }
+            
+            right++;
+        }
+        return list;
+    }
+};
 
+// 4. Count the occurences of the anagram in the string.
+class Solution {
+public:
+    int search(string pat, string txt) {
+        int k = pat.size();
+        unordered_map<char, int> freq;
+
+        // Build frequency map of pattern
+        for(char c : pat) freq[c]++;
+
+        int count = freq.size();  // distinct chars to be matched
+        int left = 0, right = 0;
+        int ans = 0;
+
+        while(right < txt.size()) {
+            // Step 1: Allow always
+            if(freq.find(txt[right]) != freq.end()) {
+                freq[txt[right]]--;
+                if(freq[txt[right]] == 0)
+                    count--;
+            }
+
+            // Step 2: Can we remove?
+            if(right >= k) {
+                if(freq.find(txt[left]) != freq.end()) {
+                    if(freq[txt[left]] == 0)
+                        count++;
+                    freq[txt[left]]++;
+                }
+                left++;
+            }
+
+            // Step 3: Is it k-sized?
+            if(right - left + 1 == k) {
+                if(count == 0)
+                    ans++;
+            }
+
+            right++;
+        }
+        return ans;
+    }
+};
 // Discussion - Form 2 :
 // ---------------------
 // 1. Find the longest subarray of all 1s with atmost k flips. 
