@@ -57,6 +57,7 @@ int solve(int[] nums, int k) {
         } else {
             tail ++;
             head = tail - 1;
+            count = 0; // Resetting the data structure.
         }
     }
     return sol;
@@ -90,6 +91,7 @@ int solve(int[] nums, int k) {
         sol += (head - tail + 1); // Total number of subarrays.
         
         // Sum of length of all subarrays :
+        // If Condition :
         // length = head - tail + 1;
         // sol += length * (length + 1) / 2;
 
@@ -98,6 +100,7 @@ int solve(int[] nums, int k) {
 
         // Step 3 : Move tail one step forward.
         if(tail <= head) {
+            // Decrement the frequency before checking
             map[nums[tail]]--;
             if(map[nums[tail]] == 0) {
                 countDistinct--;
@@ -144,7 +147,7 @@ int solve(string s) {
         } else {
             tail++; 
             head = tail - 1; 
-            freq.clear(); // Rsestting is most important.
+            freq.clear(); // Resetting is most important.
         }
     }
     return sol;
@@ -202,17 +205,13 @@ public:
         int sol = 0;
         
         while(tail < s.size()) {
-            // FIX: Always expand, check AFTER update
-            while(head+1 < s.size()) {
-                freq[s[head+1]]++;  // TRY adding first
-                int newMaxFreq = maxFreq;
-                newMaxFreq = max(newMaxFreq, freq[s[head+1]]);
-                if((head+1 - tail + 1) - newMaxFreq > k) {
-                    freq[s[head+1]]--;  // Undo if invalid
-                    break;
-                }
+            // Template: CHECK BEFORE adding (predict next window)
+            while(head+1 < s.size() && 
+                  // Predict: if we add s[head+1], will it be valid?
+                  (head+1 - tail + 1 - max(maxFreq, freq[s[head+1]] + 1) <= k)) {
                 head++;
-                maxFreq = newMaxFreq;
+                freq[s[head]]++;
+                maxFreq = max(maxFreq, freq[s[head]]);
             }
             
             sol = max(sol, head - tail + 1);
@@ -229,6 +228,9 @@ public:
         return sol;
     }
 };
+
+// TC : O(n), SC : O(26) = O(1)
+
 
 
 
