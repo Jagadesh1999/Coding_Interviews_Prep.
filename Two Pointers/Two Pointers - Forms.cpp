@@ -345,6 +345,7 @@ class Solution {
 
 // 7. Longest Repeating Character Replacement.
 // Key Insight: In any window, changes_needed = window_length - max_frequency_of_any_char
+// Note : Use frequency map and max_freq combination as the data structure.
 
 class Solution {
 public:
@@ -369,7 +370,7 @@ public:
             if(tail <= head) {
                 freq[s[tail]]--;
                 maxFreq = 0;
-                for(auto& p : freq) if(p.second > 0) maxFreq = max(maxFreq, p.second);
+                for(auto& p : freq) if(p.second > 0) maxFreq = max(maxFreq, p.second); // Most important
                 tail++;
             } else {
                 tail++; 
@@ -417,6 +418,63 @@ int longestSubarrayWithSumK(vector<int>& nums, int K) {
     return sol;
 } // TC : O(n), SC : O(1)
 
+// 9. Minimum Window Substring.
+// Given two strings s and t, return the minimum window in s which will contain all the characters in t. If there is 
+// no such window in s that covers all characters in t, return the empty string "".
+// Note that If there is such a window, it is guaranteed that there will always be only one unique minimum window in s.
 
+// Example 1:
+
+// Input: s = "ADOBECODEBANC", t = "ABC"
+// Output: "BANC"
+
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char, int> freq;
+        for(char c : t) freq[c]++;
+
+        int count = freq.size();
+        int head = -1, tail = 0;
+        int minLen = INT_MAX;
+        int start = 0;
+
+        while(tail < s.size()) {
+            // Step 1: Eat until window becomes valid
+            while(head + 1 < s.size() && count > 0) {
+                head++;
+                if(freq.find(s[head]) != freq.end()) {
+                    freq[s[head]]--;
+                    if(freq[s[head]] == 0)
+                        count--;
+                }
+            }
+
+            // Step 2: Update answer (window is valid)
+            if(count == 0 && head - tail + 1 < minLen) {
+                minLen = head - tail + 1;
+                start = tail;
+            }
+
+            // Step 3: Move tail
+            if(tail <= head) {
+                if(freq.find(s[tail]) != freq.end()) {
+                    if(freq[s[tail]] == 0)
+                        count++;
+                    freq[s[tail]]++;
+                }
+                tail++;
+            } else {
+                tail++;
+                head = tail - 1;
+                freq.clear();
+                for(char c : t) freq[c]++;
+                count = freq.size();
+            }
+        }
+
+        return minLen == INT_MAX ? "" : s.substr(start, minLen);
+    }
+};
 
 
