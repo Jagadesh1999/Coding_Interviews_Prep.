@@ -478,4 +478,50 @@ public:
     }
 };
 
+// 11. Maximum Consecutive One's
+// class Solution {
+// public:
+//     int findMaxConsecutiveOnes(vector<int>& nums) {
+//         int head = -1;
+//         int tail = 0;
+//         int sol = 0;
+
+//         while(tail < nums.size()) {
+//             while(head + 1 < nums.size() && (nums[head+1] == 1)) {
+//                 head++;
+//             }
+
+//             sol = max(sol, head - tail + 1);
+
+//             if(tail <= head) {
+//                 tail++;
+//             } else {
+//                 tail++;
+//                 head = tail - 1;
+//             }
+//         }
+//         return sol;
+//     }
+// };
+
+int findMaxConsecutiveOnes(vector<int>& nums) {
+    int sol = 0;
+    int tail = 0;
+
+    for (int head = 0; head < nums.size(); head++) {
+        if (nums[head] == 0) {
+            // If we hit a 0, the current window of 1s is broken.
+            // Move tail to the next possible start.
+            tail = head + 1;
+        } else {
+            // If it's a 1, calculate the window size: (head - tail + 1)
+            sol = max(sol, head - tail + 1);
+        }
+    }
+    return sol;
+}
+
+// -- Keep your intuition for problems where the "window" can expand and shrink based on complex rules.
+// -- Use the simple counter for "streak" problems where you just need to count consecutive items.
+
 
