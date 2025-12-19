@@ -1,4 +1,5 @@
-// Sliding Window Patterns : 
+// Sliding Window Pattern : 
+// ------------------------
 // The framework that we will study is so powerful that it covers a vast variety of harder problems.
 
 // Form 1 : Fixed sized window
