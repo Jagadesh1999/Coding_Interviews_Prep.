@@ -21,3 +21,115 @@
   // -- Compare the nums[start] + nums[end] with the target.
   // -- Since the array is sorted, based on the sum, either increment the start if the sum needs to be increased or decrement the end if the sum needs to be decreased.
 // TC : O(n), SC : O(1)
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int left = 0; 
+        int right = nums.size()-1;
+        vector<int> result;
+
+        while(left < right) {
+            if(nums[left] + nums[right] == target) {
+                result.push_back(left+1); // We need to return 1-based indices
+                result.push_back(right+1);
+                return result;
+            } else if(nums[left] + nums[right] < target) {
+                left ++;
+            } else {
+                right --;
+            }
+        }
+        return {};
+    }
+};
+
+// If the same problem statement is tweaked to return the list of all the pairs whose sum equals k, then the code is,
+// Input - Distinct elements version.
+class Solution {
+public:
+    vector<vector<int>> twoSum(vector<int>& nums, int target) {
+        int left = 0; 
+        int right = nums.size() - 1;
+        vector<vector<int>> allResults; // Changed to store multiple pairs
+        // int count = 0;
+
+        while (left < right) {
+            if (nums[left] + nums[right] == target) {
+                allResults.push_back({left + 1, right + 1});
+                // count ++;
+                left++;
+                right--;
+            } else if (nums[left] + nums[right] < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return allResults;
+        // return count;
+    }
+};
+
+// Input - Duplicates elements version.
+class Solution {
+public:
+    vector<vector<int>> twoSum(vector<int>& nums, int target) {
+        int left = 0; 
+        int right = nums.size() - 1;
+        vector<vector<int>> allResults; // Changed to store multiple pairs
+
+        while (left < right) {
+            if (nums[left] + nums[right] == target) {
+                allResults.push_back({left + 1, right + 1});
+              
+                while (left < right && nums[left] == nums[left + 1]) left++; // Skip all the identical elements
+                while (left < right && nums[right] == nums[right - 1]) right--; // Skip all the identical elements.
+
+                left ++;
+                right --;     
+            } else if (nums[left] + nums[right] < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return allResults;
+    }
+};
+
+// If the problem statement is to find the total number of pairs in the sorted array (Duplicates version)
+int countPairsDuplicates(vector<int>& nums, int target) {
+    int left = 0, right = nums.size() - 1;
+    int totalCount = 0;
+
+    while (left < right) {
+        if (nums[left] + nums[right] == target) {
+            // Check if the elements are the same
+            if (nums[left] == nums[right]) {
+                int n = right - left + 1;
+                totalCount += (n * (n - 1)) / 2; // Combination formula: nC2
+                break; // All pairs between left and right are now counted
+            } else {
+                // Count occurrences of nums[left]
+                int leftVal = nums[left], countLeft = 0;
+                while (left < right && nums[left] == leftVal) {
+                    countLeft++;
+                    left++;
+                }
+                // Count occurrences of nums[right]
+                int rightVal = nums[right], countRight = 0;
+                while (right >= left && nums[right] == rightVal) {
+                    countRight++;
+                    right--;
+                }
+                totalCount += (countLeft * countRight);
+            }
+        } else if (sum < target) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return totalCount;
+}
