@@ -1,10 +1,8 @@
 // Two Pointers : 
 // The framework that we will study is so powerful that it covers a vast variety of harder problems.
 
-// Form 1 : Fixed sized window - Sliding Window Patterns
-// Form 2 : 2 pointers moving in same direction (same array)
-// Form 3 : 2 pointers moving in opposite direction (same array)
-// Form 4 : 2 pointers moving in same direction (different array)
+// Form 1 : Sliding Window Patterns - Fixed sized window
+// Form 2 : Sliding Window Patterns - Dynamic sized window
 
 // Discussion - Form 1 :
 // ----------------------
