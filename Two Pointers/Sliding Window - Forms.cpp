@@ -212,7 +212,7 @@ int solve(int[] nums, int k) {
     return sol;
 }
 
-// 2. Find the number of subarrays with distinct elements <= k (atmost k distinct)
+// 2. Find the total number of subarrays/substrings with distinct elements <= k (atmost k distinct)
 // Ask - count
 // what needs to be found - subarrays
 // monotonic criteria <= k
@@ -267,17 +267,19 @@ int solve(int[] nums, int k) {
 
 // TC : O(n), SC : O(distinct elements).
 
-// 3. Total subarrays with exactly k distinct 
+// Total subarrays/substrings with exactly k distinct 
 The solve function needs to return atmostKDistinct(nums, k) -  atmostKDistinct(nums, k - 1)
 
-// 4. Total subarrays with atleast k distinct
+// Total subarrays/substrings with atleast k distinct
 The solve function needs to return (nums.size() * (nums.size() + 1) / 2) -  (atmostKDistinct(nums, k - 1))
 
 Note : 
 This subtraction trick works only for count versions.
 For longest/shortest versions, be specific about conditions while updating the solution.
 
-// 5. Longest Substring without repeating characters.
+// 3. Fruits into Baskets. - Length of the longest subarray with atmost k distinct elements.
+
+// 4. Longest subarray/substring without repeating characters.
 int solve(string s) {
     int head = -1, tail = 0;
     unordered_map<char, int> freq;
@@ -304,47 +306,7 @@ int solve(string s) {
 
 // TC : O(n), SC : O(n)
 
-// 6. Longest/Shortest substring with exactly k distinct
-class Solution {
-  public:
-    int longestKSubstr(string &s, int k) {
-        int head = -1;
-        int tail = 0;
-        unordered_map<char, int> freq;
-        int countDistinct = 0;
-        int sol = -1;
-        
-        while(tail < s.size()) {
-            while(head + 1 < s.size() && ((countDistinct < k) || (countDistinct == k && freq[s[head+1]] >= 1 ))) {
-                head++;
-                freq[s[head]]++;
-                if(freq[s[head]] == 1) countDistinct++;
-            }
-            
-            if(countDistinct == k) sol = max(sol, head - tail + 1);
-            
-            if(tail <= head) {
-                freq[s[tail]]--;
-                if(freq[s[tail]] == 0) countDistinct--;
-                tail++;
-            } else {
-                tail ++;
-                head = tail - 1;
-                countDistinct = 0;
-                freq.clear();
-            }
-        }
-        return sol;
-    }
-};
-
-// Think about the problems :
-// Longest/Shortest substring with atmost k distinct
-// Longest/Shortest substring with atleasr k distinct
-
-// 7. Fruits into Baskets. - Length of the longest subarray with atmost k distinct elements.
-
-// 8. Longest Repeating Character Replacement.
+// 5. Longest Repeating Character Replacement.
 // Key Insight: In any window, changes_needed = window_length - max_frequency_of_any_char
 // Note : Use frequency map and max_freq combination as the data structure.
 
@@ -386,7 +348,7 @@ public:
 
 // TC : O(n), SC : O(26) = O(1)
 
-// 9. Given an array containing N positive integers and an integer K. Your task is to find the length of the longest 
+// 6. Given an array containing N positive integers and an integer K. Your task is to find the length of the longest 
 // Sub-Array with sum of the elements equal to the given value K.
     
 int longestSubarrayWithSumK(vector<int>& nums, int K) {
@@ -419,7 +381,7 @@ int longestSubarrayWithSumK(vector<int>& nums, int K) {
     return sol;
 } // TC : O(n), SC : O(1)
 
-// 10. Minimum Window Substring.
+// 7. Minimum Window Substring.
 // Given two strings s and t, return the minimum window in s which will contain all the characters in t. If there is 
 // no such window in s that covers all characters in t, return the empty string "".
 // Note that If there is such a window, it is guaranteed that there will always be only one unique minimum window in s.
@@ -478,7 +440,7 @@ public:
     }
 };
 
-// 11. Maximum Consecutive One's
+// 8. Maximum Consecutive One's
 // class Solution {
 // public:
 //     int findMaxConsecutiveOnes(vector<int>& nums) {
