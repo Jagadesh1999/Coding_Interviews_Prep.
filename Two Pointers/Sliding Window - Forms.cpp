@@ -1,8 +1,8 @@
-// Two Pointers : 
+// Sliding Window Patterns : 
 // The framework that we will study is so powerful that it covers a vast variety of harder problems.
 
-// Form 1 : Sliding Window Patterns - Fixed sized window
-// Form 2 : Sliding Window Patterns - Dynamic sized window
+// Form 1 : Fixed sized window
+// Form 2 : Dynamic sized window
 
 // Discussion - Form 1 :
 // ----------------------
