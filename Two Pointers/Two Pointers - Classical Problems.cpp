@@ -58,4 +58,33 @@ public:
     }
 };
 
-// 4. 
+// 4. Merge Sorted Array - LeetCode
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int i = m - 1; 
+        int j = n - 1;
+        int k = m + n - 1;
+
+        while (i >= 0 && j >= 0) {
+            // We want the LARGER number to go to the back
+            if (nums1[i] > nums2[j]) {
+                nums1[k] = nums1[i];
+                i--; // Move the nums1 scout back
+                k--; 
+            } else {
+                nums1[k] = nums2[j];
+                j--; // Move the nums2 scout back
+                k--;
+            }
+        }
+
+        // If the nums2 scout still has numbers left, 
+        // it means they are smaller than everything else and belong at the front.
+        while (j >= 0) {
+            nums1[k] = nums2[j];
+            j--;
+            k--;
+        }
+    }
+};
