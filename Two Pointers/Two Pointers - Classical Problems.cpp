@@ -40,8 +40,7 @@ public:
     }
 };
 
-// 3. Remove the duplicates from sorted array.
-// Remember the displayer and the scout analogy.
+// 3. Remove the duplicates from sorted array. (Displayer and scout analogy)
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
@@ -58,3 +57,5 @@ public:
         return i + 1; // Return the total count of unique elements
     }
 };
+
+// 4. 
