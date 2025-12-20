@@ -134,7 +134,8 @@ int countPairsDuplicates(vector<int>& nums, int target) {
     return totalCount;
 }
 
-// Container with most water
+// 2. Container with most water
+// f(i, j) - min(arr[i], arr[j]) * j - 1;
 // Brute Force - Check for all the possible pairs of lines - O(n^2)
 // Optimised Approach - Two Pointers
 class Solution {
@@ -147,12 +148,69 @@ public:
         while(left < right) {
             int currArea = min(height[left], height[right]) * (right - left);
             maxArea = max(currArea, maxArea);
-            if(height[left] < height[right]) {
-                left++;
-            } else {
+
+            if(height[left] == height[right]) {
+                // Shrink at both the edges to get rid of the duplicates
+                left++; 
                 right--;
+            }
+            else if(height[left] < height[right]) {
+                left++; // Know the proof behind this conclusion
+            } else {
+                right--; // Know the proof behind this conclusion
             }
         }
         return maxArea;
     }
-}; // TC : O(n)
+};
+
+// 3. 3 Sum Problem - Count the number of triplets.
+// Brute Force Approach : O(n^3).
+// Optimised Approach : 
+// Step 1 : Sort the array - O(n log n)
+// Step 2 : i iterates from 0 to nums.size()-3.
+            // For each iteration of i, have two pointers left(i+1) and right(nums.size()-1)
+            // Run the inner while loop (left < right) 
+            // Calculate the sum, if (nums[i] + nums[left] + nums[right] == target) count++;
+            // Else if (nums[i] + nums[left] + nums[right] < target) left++;
+            // Else right--;
+
+
+// Discussion - Form 2 : 
+// ---------------------
+// 1. Is Subsequence?
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int i = 0;
+        int j = 0;
+
+        while(i < s.length() && j < t.length()) {
+            if(s[i] == t[j]) { // Found the match, so move both the pointers.
+                i++; 
+                j++;
+            } else {
+                j++;
+            }
+        }
+
+        if(i == s.length()) return 1;
+        return 0;
+    }
+}; 
+
+// 2. Intersection of 2 sets in the sorted array.
+// [2, 3, 4, 5]  
+// [1, 2, 5]
+
+// Approach : 
+// Match, take the element in the sol set and move both the pointers ahead.
+// If no match, move the pointer of the smallest element ahead.
+
+// 2. Union of 2 sets in the sorted array
+// [2, 3, 4, 5]  
+// [1, 2, 5]
+
+// Approach : 
+// Match, take the element in the sol set and move both the pointers ahead.
+// If no match, take the smallest element in the set and move the pointer of the smallest element ahead.
