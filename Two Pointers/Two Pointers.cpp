@@ -165,16 +165,31 @@ public:
 };
 
 // 3. 3 Sum Problem - Count the number of triplets.
-// Brute Force Approach : O(n^3).
-// Optimised Approach : 
-// Step 1 : Sort the array - O(n log n)
-// Step 2 : i iterates from 0 to nums.size()-3.
-            // For each iteration of i, have two pointers left(i+1) and right(nums.size()-1)
-            // Run the inner while loop (left < right) 
-            // Calculate the sum, if (nums[i] + nums[left] + nums[right] == target) count++;
-            // Else if (nums[i] + nums[left] + nums[right] < target) left++;
-            // Else right--;
+Brute Force Approach : O(n^3).
+  
+Optimised Approach : 
+Step 1 : 
+Sort the array - O(n log n)
 
+Step 2 : 
+i iterates from 0 to nums.size()-3.
+For each iteration of i, have two pointers left(i+1) and right(nums.size()-1)
+
+Step 3 : 
+Run the inner while loop (left < right) 
+Calculate the sum, if (nums[i] + nums[left] + nums[right] == target) {
+  count++; 
+  left++;
+  right--;
+}
+Else if (nums[i] + nums[left] + nums[right] < target) left++;
+Else right--;
+
+Return the count at the last.
+
+// Critical ideas to think :
+// Tackle the same problem when we are asked to check if we have the valid target.
+// Tackle the same problem when we are asked to return one triplet whose sum equals target.
 
 // Discussion - Form 2 : 
 // ---------------------
