@@ -3,138 +3,7 @@
 // Form 1 : 2 pointers moving in opposite direction (same array)
 // Form 2 : 2 pointers moving in same direction (different array)
 
-// Discussion - Form 1 :
-// ---------------------
-// 1. Two Sum Problem for the sorted array.
-// Input : nums = [10, 20, 30, 40, 50], target = 70.
-// Output : 1 // 20 + 50 = 70
-
-// Brute Force Approach : 
-// -- For each element, try adding that particular element with the other elements of the array one by one and calculate the sum.
-// -- If there exists any pair whose sum is equal to the target, then return true. 
-// -- If there exists no such combination, then return false.
-// -- TC : O(n^2), SC : O(1)
-
-// Better Approach : 
-// -- Have two pointers, one at the start and one at the end.
-// -- while (left < right) : 
-  // -- Compare the nums[start] + nums[end] with the target.
-  // -- Since the array is sorted, based on the sum, either increment the start if the sum needs to be increased or decrement the end if the sum needs to be decreased.
-// TC : O(n), SC : O(1)
-
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        int left = 0; 
-        int right = nums.size()-1;
-        vector<int> result;
-
-        while(left < right) {
-            if(nums[left] + nums[right] == target) {
-                result.push_back(left+1); // We need to return 1-based indices
-                result.push_back(right+1);
-                return result;
-            } else if(nums[left] + nums[right] < target) {
-                left ++;
-            } else {
-                right --;
-            }
-        }
-        return {};
-    }
-};
-
-// If the same problem statement is tweaked to return the list of all the pairs whose sum equals k, then the code is,
-// Input - Distinct elements version.
-class Solution {
-public:
-    vector<vector<int>> twoSum(vector<int>& nums, int target) {
-        int left = 0; 
-        int right = nums.size() - 1;
-        vector<vector<int>> allResults; // Changed to store multiple pairs
-        // int count = 0;
-
-        while (left < right) {
-            if (nums[left] + nums[right] == target) {
-                allResults.push_back({left + 1, right + 1});
-                // count ++;
-                left++;
-                right--;
-            } else if (nums[left] + nums[right] < target) {
-                left++;
-            } else {
-                right--;
-            }
-        }
-        return allResults;
-        // return count;
-    }
-};
-
-// Input - Duplicates elements version.
-class Solution {
-public:
-    vector<vector<int>> twoSum(vector<int>& nums, int target) {
-        int left = 0; 
-        int right = nums.size() - 1;
-        vector<vector<int>> allResults; // Changed to store multiple pairs
-
-        while (left < right) {
-            if (nums[left] + nums[right] == target) {
-                allResults.push_back({left + 1, right + 1});
-              
-                while (left < right && nums[left] == nums[left + 1]) left++; // Skip all the identical elements
-                while (left < right && nums[right] == nums[right - 1]) right--; // Skip all the identical elements.
-
-                left ++;
-                right --;     
-            } else if (nums[left] + nums[right] < target) {
-                left++;
-            } else {
-                right--;
-            }
-        }
-        return allResults;
-    }
-};
-
-// If the problem statement is to find the total number of pairs in the sorted array (Duplicates version)
-int countPairsDuplicates(vector<int>& nums, int target) {
-    int left = 0, right = nums.size() - 1;
-    int totalCount = 0;
-
-    while (left < right) {
-        if (nums[left] + nums[right] == target) {
-            // Check if the elements are the same
-            if (nums[left] == nums[right]) {
-                int n = right - left + 1;
-                totalCount += (n * (n - 1)) / 2; // Combination formula: nC2
-                break; // All pairs between left and right are now counted
-            } else {
-                // Count occurrences of nums[left]
-                int leftVal = nums[left], countLeft = 0;
-                while (left < right && nums[left] == leftVal) {
-                    countLeft++;
-                    left++;
-                }
-                // Count occurrences of nums[right]
-                int rightVal = nums[right], countRight = 0;
-                while (right >= left && nums[right] == rightVal) {
-                    countRight++;
-                    right--;
-                }
-                totalCount += (countLeft * countRight);
-            }
-        } else if (sum < target) {
-            left++;
-        } else {
-            right--;
-        }
-    }
-    return totalCount;
-}
-
-// 2. Container with most water
+// 1. Container with most water
 // f(i, j) - min(arr[i], arr[j]) * j - 1;
 // Brute Force - Check for all the possible pairs of lines - O(n^2)
 // Optimised Approach - Two Pointers
@@ -164,32 +33,231 @@ public:
     }
 };
 
-// 3. 3 Sum Problem - Count the number of triplets.
-Brute Force Approach : O(n^3).
-  
-Optimised Approach : 
-Step 1 : 
-Sort the array - O(n log n)
-
-Step 2 : 
-i iterates from 0 to nums.size()-3.
-For each iteration of i, have two pointers left(i+1) and right(nums.size()-1)
-
-Step 3 : 
-Run the inner while loop (left < right) 
-Calculate the sum, if (nums[i] + nums[left] + nums[right] == target) {
-  count++; 
-  left++;
-  right--;
+// 2. 3 sum (Distinct input)
+// 2.1 - Return boolean if a valid triplet exists
+bool hasTriplet(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    int n = nums.size();
+    for (int i = 0; i < n - 2; i++) {
+        int left = i + 1, right = n - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == target) return true;
+            else if (sum < target) left++;
+            else right--;
+        }
+    }
+    return false;
 }
-Else if (nums[i] + nums[left] + nums[right] < target) left++;
-Else right--;
 
-Return the count at the last.
+// 3.2 - Return any one triplet
+vector<int> getOneTriplet(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    int n = nums.size();
+    for (int i = 0; i < n - 2; i++) {
+        int left = i + 1, right = n - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == target) return {nums[i], nums[left], nums[right]};
+            else if (sum < target) left++;
+            else right--;
+        }
+    }
+    return {};
+}
 
-// Critical ideas to think :
-// Tackle the same problem when we are asked to check if we have the valid target.
-// Tackle the same problem when we are asked to return one triplet whose sum equals target.
+// 3.3 - Return all triplets
+// Note: Since elements are distinct, "All Triplets" and "All Unique Triplets" are effectively the same problem.
+vector<vector<int>> getAllTriplets(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    vector<vector<int>> res;
+    int n = nums.size();
+    for (int i = 0; i < n - 2; i++) {
+        int left = i + 1, right = n - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == target) {
+                res.push_back({nums[i], nums[left], nums[right]});
+                left++; 
+                right--;
+            } 
+            else if (sum < target) left++;
+            else right--;
+        }
+    }
+    return res;
+}
+
+// 3.4 - Count all triplets
+// Note: Because every element is unique, we don't need to count inner frequencies; every match found is a single unique triplet.
+int countAllTriplets(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    int totalCount = 0;
+    int n = nums.size();
+    for (int i = 0; i < n - 2; i++) {
+        int left = i + 1, right = n - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == target) {
+                totalCount++;
+                left++;
+                right--;
+            } 
+            else if (sum < target) left++;
+            else right--;
+        }
+    }
+    return totalCount;
+}
+
+// 3. 3 Sum Problem (Duplicates)
+// 3.1 - Return the boolean if the valid triplet exists or not.
+bool hasTriplet(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    for (int i = 0; i < (int)nums.size() - 2; i++) {
+        int left = i + 1, right = nums.size() - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == target) return true;
+            else if (sum < target) left++;
+            else right--;
+        }
+    }
+    return false;
+}
+
+// 3.2 - Return any one triplet
+vector<int> getOneTriplet(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    for (int i = 0; i < (int)nums.size() - 2; i++) {
+        int left = i + 1, right = nums.size() - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == target) return {nums[i], nums[left], nums[right]};
+            else if (sum < target) left++;
+            else right--;
+        }
+    }
+    return {};
+}
+
+// 3.3 - Return all the triplets.
+vector<vector<int>> getAllTriplets(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end()); // Sorting helps, but won't prevent duplicates here
+    vector<vector<int>> res;
+    for (int i = 0; i < (int)nums.size() - 2; i++) {
+        int left = i + 1, right = nums.size() - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == target) {
+                res.push_back({nums[i], nums[left], nums[right]});
+                // To get ALL combinations of these values, we must explore further
+                // without skipping identical values.
+                int tempRight = right - 1;
+                while (tempRight > left && nums[i] + nums[left] + nums[tempRight] == target) {
+                    res.push_back({nums[i], nums[left], nums[tempRight]});
+                    tempRight--;
+                }
+                left++;
+            } 
+            else if (sum < target) left++;
+            else right--;
+        }
+    }
+    return res;
+}
+
+// 3.4 - Return all unique triplets
+vector<vector<int>> getAllUniqueTriplets(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    vector<vector<int>> res;
+    for (int i = 0; i < (int)nums.size() - 2; i++) {
+        if (i > 0 && nums[i] == nums[i-1]) continue;
+        int left = i + 1, right = nums.size() - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == target) {
+                res.push_back({nums[i], nums[left], nums[right]});
+                while (left < right && nums[left] == nums[left+1]) left++; // Skip left dups
+                while (left < right && nums[right] == nums[right-1]) right--; // Skip right dups
+                left++; right--;
+            } else if (sum < target) left++;
+            else right--;
+        }
+    }
+    return res;
+}
+
+// 3.5 - Count all the triplets
+int countAllTriplets(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    int totalCount = 0;
+
+    for (int i = 0; i < (int)nums.size() - 2; i++) {
+        int left = i + 1, right = nums.size() - 1;
+        int currentTarget = target - nums[i];
+
+        while (left < right) {
+            if (nums[left] + nums[right] == currentTarget) {
+                if (nums[left] == nums[right]) {
+                    int n = right - left + 1;
+                    totalCount += (n * (n - 1)) / 2; 
+                    break; 
+                } else {
+                    int leftVal = nums[left], countLeft = 0;
+                    while (left < right && nums[left] == leftVal) {
+                        countLeft++;
+                        left++;
+                    }
+                    int rightVal = nums[right], countRight = 0;
+                    while (right >= left && nums[right] == rightVal) {
+                        countRight++;
+                        right--;
+                    }
+                    totalCount += (countLeft * countRight);
+                }
+            } else if (nums[left] + nums[right] < currentTarget) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+    }
+    return totalCount;
+}
+
+// 3.6 Count all the unique triplets.
+int countUniqueTriplets(vector<int>& nums, int target) {
+    sort(nums.begin(), nums.end());
+    int totalCount = 0;
+
+    for (int i = 0; i < (int)nums.size() - 2; i++) {
+        // Skip duplicate pivot values
+        if (i > 0 && nums[i] == nums[i-1]) continue;
+
+        int left = i + 1, right = nums.size() - 1;
+        int currentTarget = target - nums[i];
+
+        while (left < right) {
+            if (nums[left] + nums[right] == currentTarget) {
+                totalCount++; // We found one unique combination
+                
+                // Skip all duplicate values for left and right
+                int leftVal = nums[left];
+                while (left < right && nums[left] == leftVal) left++;
+                
+                int rightVal = nums[right];
+                while (right > left && nums[right] == rightVal) right--;
+                
+            } else if (nums[left] + nums[right] < currentTarget) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+    }
+    return totalCount;
+}
 
 // Discussion - Form 2 : 
 // ---------------------
