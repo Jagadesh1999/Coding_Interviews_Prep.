@@ -40,4 +40,21 @@ public:
     }
 };
 
-// 3. Minimise the max(a, b, c) - min(a, b, c)
+// 3. Remove the duplicates from sorted array.
+// Remember the displayer and the scout analogy.
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if (nums.empty()) return 0;
+        
+        int i = 0; // The Displayer: marks the end of the unique elements 
+        for (int j = 1; j < nums.size(); j++) { // The Scout: looks for new values  
+            // If the Scout finds a new value we haven't seen yet
+            if (nums[j] != nums[i]) {
+                i++;             // Move to the next empty display slot
+                nums[i] = nums[j]; // Copy the new value into that slot
+            }
+        }
+        return i + 1; // Return the total count of unique elements
+    }
+};
