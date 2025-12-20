@@ -37,5 +37,7 @@ public:
            }
        }
        return true;
-}
+    }
 };
+
+// 3. Minimise the max(a, b, c) - min(a, b, c)
